@@ -1,0 +1,25 @@
+name: matrix demo
+on:
+  workflow_dispatch:
+
+
+jobs:
+  # Creating a release candidate tag for the latest valid commit
+  TagDockerImage:
+    name: Tag Docker Image
+    needs: [LastSuccessfulCommit, CreateTag]
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+          - environment: azure-acr-dev
+            registry: dev
+          - environment: azure-acr-prod
+            registry: prod
+    environment:
+      name: ${{ matrix.environment }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: "raicloud${{ matrix.registry }}"
+        run: echo "raicloud${{ matrix.registry }}"
