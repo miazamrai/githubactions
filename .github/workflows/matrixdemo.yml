@@ -7,7 +7,6 @@ jobs:
   # Creating a release candidate tag for the latest valid commit
   TagDockerImage:
     name: Tag Docker Image
-    needs: [LastSuccessfulCommit, CreateTag]
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
